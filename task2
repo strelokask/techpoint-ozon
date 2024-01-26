@@ -1,4 +1,4 @@
-﻿var input = Console.ReadLine();
+var input = Console.ReadLine();
 
 int t = int.Parse(input);
 for(int i=0; i < t; i++){
