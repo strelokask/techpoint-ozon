@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 
 int t = int.Parse(Console.ReadLine());
 while(t-- > 0){
@@ -8,6 +8,7 @@ while(t-- > 0){
     };
     int i = 0;
     int j = 0;
+    var str = new StringBuilder();
     foreach(var ch in input){
         switch (ch){
             case 'L':
