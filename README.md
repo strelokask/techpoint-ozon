@@ -2,4 +2,5 @@
 https://techpoint.ozon.ru/contest/9
 
 ```
-Get-Content .\input.txt | .\bin\Debug\net7.0\ozon.exe```
+Get-Content .\input.txt | .\bin\Debug\net7.0\ozon.exe
+```
