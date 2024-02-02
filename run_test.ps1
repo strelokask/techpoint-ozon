@@ -1,20 +1,12 @@
 $RED = [ConsoleColor]::Red
 $GREEN = [ConsoleColor]::Green
-$NC = [ConsoleColor]::White
 
 if ($args.Count -ne 1) {
-    Write-Host "Usage: $PSCommandPath <task number>" -ForegroundColor $RED
+    Write-Host "Usage: $PSCommandPath <project path>" -ForegroundColor $RED
     exit 1
 }
 
-$task_num = $args[0]
-
-if ($task_num -lt 1 -or $task_num -gt 9) {
-    Write-Host "Invalid task number: $task_num" -ForegroundColor $RED
-    exit 1
-}
-
-$project_path = "task$task_num"
+$project_path = $args[0]
 
 if (-not (Test-Path $project_path -PathType Container)) {
     Write-Host "Project folder $project_path doesn't exist" -ForegroundColor $RED
