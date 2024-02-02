@@ -5,7 +5,7 @@ var VALUES = new[] {'2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 
 var SUITS = new [] {'S', 'C', 'D', 'H'};
 while(t-- > 0){
     var N = int.Parse(Console.ReadLine());
-    var player1s = new List<string>[N];
+    var players = new List<string>[N];
     for (int i = 0; i < N; i++)
     {
         players[i] = Console.ReadLine().Split().ToList();
