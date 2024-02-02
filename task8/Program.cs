@@ -17,13 +17,13 @@ while(t-- > 0){
     }
 
     List<string> possibleCards = new (); 
-    var maxValuePlayerIndexes = players.Select(
+    var maxValuePlayers = players.Select(
         p => Math.Max(
             Array.FindIndex(VALUES, value => value == p[0][0]),
             Array.FindIndex(VALUES, value => value == p[1][0])
         )
     ).ToList();
-    var maxValueIndex = maxValuePlayerIndexes.Max();
+    var maxValue = maxValuePlayers.Max();
     List<string> allPossibleCombination = new();
     foreach(var val in VALUES){
         foreach(var s in SUITS){
@@ -32,7 +32,7 @@ while(t-- > 0){
     }
     //‘Сет со значением x’
     if(players[0][0][0] == players[0][1][0]){
-        var addingData = maxValuePlayerIndexes[0] >= maxValueIndex
+        var addingData = maxValuePlayers[0] >= maxValue
             ? allPossibleCombination
             : SUITS.Select(x => ""+players[0][0][0]+x)
             ;
@@ -45,38 +45,22 @@ while(t-- > 0){
     //Пара со значением x
     else {
         possibleCards.AddRange(
+            // SUITS
+            //     .Select(x => ""+VALUES[maxValuePlayers[0]]+x)
             allPossibleCombination
                 .Where(x => !players.Any(p => p.Contains(x)))
         );
         for(int i = 1; i < N; i++){
             if(players[i][0][0] == players[i][1][0]){
-                if(maxValuePlayerIndexes[i] >= maxValuePlayerIndexes[0]){
+                if(maxValuePlayers[i] >= maxValuePlayers[0]){
                     possibleCards.Clear();
                     break;
                 }
                 else{
                     possibleCards = possibleCards
-                        .Where(x => x[0] == VALUES[maxValueIndex])
+                        .Where(x => x[0] == VALUES[maxValuePlayers[0]])
                         .ToList();
                         
-                }
-            }
-            else{
-                if(maxValueIndex == maxValuePlayerIndexes[0]){
-                    possibleCards = possibleCards
-                        .Where(x => (x[0] == players[0][0][0]) 
-                        || (x[0] == players[0][1][0])     
-                        || (x[0] != players[i][0][0]) && (x[0] != players[i][1][0])
-                        )
-                        .ToList();
-                }
-                else{
-                    possibleCards = possibleCards
-                        .Where(x => Array.IndexOf(VALUES, x[0]) > maxValueIndex 
-                            || (players[0][0][0] == x[0])
-                            || (players[0][1][0] == x[0])
-                        )
-                        .ToList();
                 }
             }
         }
