@@ -47,7 +47,7 @@ foreach ($file in $test_path) {
                     Write-Host "Output File: $($expected_content[$i])"
                     break;
                 }
-                Write-Host "Input File: $($input_content[$i])"
+                Write-Host $input_content[$i] -NoNewline
             }
             exit 1
         }
