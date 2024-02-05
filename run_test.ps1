@@ -35,8 +35,20 @@ foreach ($file in $test_path) {
         $input_file = $file.FullName -replace '\.a$'
         $test_num = [System.IO.Path]::GetFileNameWithoutExtension($input_file)
         $test_name = "Test $test_num"
-        if((Get-Content $input_file | & $exe_path.FullName | Out-String) -ne (Get-Content $file.FullName | Out-String)){
+
+        $input_content = Get-Content $input_file | & $exe_path.FullName | Out-String;
+        $expected_content = Get-Content $file.FullName | Out-String;
+        if(($input_content) -ne ($expected_content)){
             Write-Host "FAIL $test_name" -ForegroundColor $RED
+            for ($i = 0; $i -lt $input_content.Length; $i++) {
+                if ($input_content[$i] -ne $expected_content[$i]) {
+                    Write-Host "Difference found at line $($i + 1):" -ForegroundColor $RED
+                    Write-Host "Input File: $($input_content[$i])"
+                    Write-Host "Output File: $($expected_content[$i])"
+                    break;
+                }
+                Write-Host "Input File: $($input_content[$i])"
+            }
             exit 1
         }
         else{

@@ -19,7 +19,7 @@ while(t-- > 0){
         if(lvl >= 0){
             var line = new List<string>();
             for(int i=1; i <= lvl; i++){
-                line.Add(i != lvl && isNodeLastOnLevel[i] ? "" : "|");
+                line.Add(i != lvl && isNodeLastOnLevel[i] ? " " : "|");
             }
             if(lvl > 0){
                 Console.WriteLine(string.Join("  ", line));
