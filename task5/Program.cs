@@ -1,18 +1,42 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics.SymbolStore;
+using System.Numerics;
+using System.Text.Json;
 
 int t = int.Parse(Console.ReadLine());
 while(t-- > 0){
-    var input = Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList();
-    var N = input[0];
-    double P = input[1] / 100.0;
-    double ans = 0;
-    
+    var N = int.Parse(Console.ReadLine());
+    var a = new List<string>();
     for(int i=0; i < N; i++){
-        var a = double.Parse(Console.ReadLine());
-        double profit = Math.Round(a * P, 2);
-        double wrong = Math.Truncate(profit);
-        ans += profit - wrong;
+        a.Add(Console.ReadLine());
     }
-
-    Console.WriteLine(String.Format("{0:0.00}", Math.Round(ans, 2)));
+    var jsonDoc = JsonDocument.Parse(string.Join("\n", a), new JsonDocumentOptions{
+        MaxDepth = 1000
+    });
+    var root = jsonDoc.RootElement;
+    int ProcessFolder(JsonElement json, bool isParentVirus){
+        var ans = 0;
+        var isDirHasVirus = isParentVirus;
+        if (json.TryGetProperty("files", out var filesElement) && filesElement.ValueKind == JsonValueKind.Array){
+            foreach(var file in filesElement.EnumerateArray()){
+                isDirHasVirus = isDirHasVirus || file.GetString().Contains(".hack");
+                if(isDirHasVirus){
+                    break;
+                }
+            }
+            if(isDirHasVirus){
+                foreach(var file in filesElement.EnumerateArray()){
+                    ans++;
+                }
+            }
+        }
+        if (json.TryGetProperty("folders", out var foldersElement) && foldersElement.ValueKind == JsonValueKind.Array){
+            foreach(var folder in foldersElement.EnumerateArray()){
+                var folderCount = ProcessFolder(folder, isDirHasVirus);
+                ans += folderCount;
+            }
+        }
+        return ans;
+    }
+    var ans = ProcessFolder(root, false);
+    Console.WriteLine(ans);
 }
