@@ -36,18 +36,18 @@ foreach ($file in $test_path) {
         $test_num = [System.IO.Path]::GetFileNameWithoutExtension($input_file)
         $test_name = "Test $test_num"
 
-        $input_content = Get-Content $input_file | & $exe_path.FullName | Out-String;
-        $expected_content = Get-Content $file.FullName | Out-String;
-        if(($input_content) -ne ($expected_content)){
+        $input_content = Get-Content $input_file | & $exe_path.FullName ;#| Out-String;
+        $expected_content = Get-Content $file.FullName ;#| Out-String;
+        if(Compare-Object $input_content $expected_content){
             Write-Host "FAIL $test_name" -ForegroundColor $RED
             for ($i = 0; $i -lt $input_content.Length; $i++) {
                 if ($input_content[$i] -ne $expected_content[$i]) {
-                    Write-Host "Difference found at line $($i + 1):" -ForegroundColor $RED
-                    Write-Host "Your File: $($input_content[$i])"
-                    Write-Host "Expected File: $($expected_content[$i])"
-                    break;
+                    Write-Host "At line: $($i): " -ForegroundColor BLUE
+                    Write-Host "Your File: $($input_content[$i])" -ForegroundColor $RED
+                    Write-Host "Expected File: $($expected_content[$i])" -ForegroundColor $GREEN
+                    # break;
                 }
-                Write-Host $input_content[$i] -NoNewline
+                Write-Host $input_content[$i]
             }
             exit 1
         }
