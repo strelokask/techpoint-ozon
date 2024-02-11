@@ -42,7 +42,7 @@ foreach ($file in $test_path) {
             Write-Host "FAIL $test_name" -ForegroundColor $RED
             for ($i = 0; $i -lt $input_content.Length; $i++) {
                 if ($input_content[$i] -ne $expected_content[$i]) {
-                    Write-Host "At line: $($i): " -ForegroundColor BLUE
+                    Write-Host "At line $($i): " -ForegroundColor BLUE
                     Write-Host "Your File: $($input_content[$i])" -ForegroundColor $RED
                     Write-Host "Expected File: $($expected_content[$i])" -ForegroundColor $GREEN
                     # break;

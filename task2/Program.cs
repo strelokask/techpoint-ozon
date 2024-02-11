@@ -1,13 +1,15 @@
-﻿int t = int.Parse(Console.ReadLine());
+﻿using System.Numerics;
+
+int t = int.Parse(Console.ReadLine());
 while(t-- > 0){
     var input = Console.ReadLine().Split(' ').Select(x => int.Parse(x)).ToList();
     var N = input[0];
-    var P = input[1];
-    var ans = 0.0;
+    double P = input[1] / 100.0;
+    double ans = 0;
     
     for(int i=0; i < N; i++){
-        var a = int.Parse(Console.ReadLine());
-        double profit = a*(P / 100.0);
+        var a = double.Parse(Console.ReadLine());
+        double profit = Math.Round(a * P, 2);
         double wrong = Math.Truncate(profit);
         ans += profit - wrong;
     }
