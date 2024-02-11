@@ -43,8 +43,8 @@ foreach ($file in $test_path) {
             for ($i = 0; $i -lt $input_content.Length; $i++) {
                 if ($input_content[$i] -ne $expected_content[$i]) {
                     Write-Host "Difference found at line $($i + 1):" -ForegroundColor $RED
-                    Write-Host "Input File: $($input_content[$i])"
-                    Write-Host "Output File: $($expected_content[$i])"
+                    Write-Host "Your File: $($input_content[$i])"
+                    Write-Host "Expected File: $($expected_content[$i])"
                     break;
                 }
                 Write-Host $input_content[$i] -NoNewline
